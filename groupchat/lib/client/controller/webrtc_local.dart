@@ -1,6 +1,6 @@
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:groupchat/models/connection.dart';
-import 'package:groupchat/models/socket_id.dart';
+import 'package:groupchat/client/models/connection.dart';
+import 'package:groupchat/client/models/socket_id.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:sdp_transform/sdp_transform.dart';
 

@@ -1,8 +1,7 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:groupchat/screens/home.dart';
-import 'package:groupchat/screens/client/join_screen.dart';
+import 'package:groupchat/home.dart';
 
 void main() {
   runApp(const MyApp());

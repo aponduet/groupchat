@@ -1,5 +1,5 @@
-import 'package:groupchat/screens/client/chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:groupchat/client/screens/chat_screen.dart';
 
 class JoinScreen extends StatefulWidget {
   const JoinScreen({Key? key}) : super(key: key);

@@ -28,15 +28,7 @@ io.on("connection",  (socket)=> {
 
     
 
-    // socket.on("newConnect", (roomId, callback) => {
-        
-    //     //console.log(callback);
-    //     //console.log(io.sockets.adapter.rooms);
-    //     let socketIds = Object.keys(io.sockets.adapter.rooms[roomId].sockets).filter(id => id !== socket.id);
-    //     // console.log(socketIds);
-    //     // console.log(socket.id);
-    //     callback({ originId: socket.id, destinationIds: socketIds });
-    // })
+    
 
     socket.on("newConnect", (roomId, callback) => {
         //convert Socket.io map to Array and separate users and room names. https://logfetch.com/js-socketio-active-rooms/

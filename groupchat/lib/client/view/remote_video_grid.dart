@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:groupchat/models/connection.dart';
+import 'package:groupchat/client/models/connection.dart';
 
 class RemoteVideoGrid extends StatelessWidget {
   final Map<String, Connection> connections;

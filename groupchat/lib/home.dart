@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:groupchat/screens/client/join_screen.dart';
-import 'package:groupchat/screens/server/server_home.dart';
+import 'package:groupchat/client/screens/join_screen.dart';
+import 'package:groupchat/server/server_home.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);

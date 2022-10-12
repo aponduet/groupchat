@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:groupchat/controller/controller.dart';
-import 'package:groupchat/view/local_video_display.dart';
-import 'package:groupchat/view/remote_video_grid.dart';
+import 'package:groupchat/client/controller/controller.dart';
+import 'package:groupchat/client/view/local_video_display.dart';
+import 'package:groupchat/client/view/remote_video_grid.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreen extends StatefulWidget {
