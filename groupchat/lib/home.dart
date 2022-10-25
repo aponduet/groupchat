@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groupchat/client/screens/join_screen.dart';
-import 'package:groupchat/server/server_home.dart';
+import 'package:groupchat/server/screens/login_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ServerHome()));
+                  MaterialPageRoute(builder: (context) => const LoginScreen()));
             },
             child: const Text("Server"),
           ),

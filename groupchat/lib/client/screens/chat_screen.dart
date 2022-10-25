@@ -1,14 +1,15 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:groupchat/client/controller/controller.dart';
+import 'package:groupchat/client/view/control_button_bar.dart';
 import 'package:groupchat/client/view/local_video_display.dart';
 import 'package:groupchat/client/view/remote_video_grid.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatScreen extends StatefulWidget {
   final String roomId;
-  const ChatScreen({Key? key, required this.roomId}) : super(key: key);
-
+  final String username;
+  const ChatScreen({Key? key, required this.roomId, required this.username})
+      : super(key: key);
   @override
   ChatScreenState createState() => ChatScreenState();
 }
@@ -35,10 +36,17 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    controller.webRtcLocal.initRenderer();
+    controller.webSocket.initSocket(widget.roomId, widget.username, controller);
+    setClientInfo();
     //print(widget.roomId);
-    controller.webSocket.initSocket(widget.roomId, controller);
     super.initState();
+  }
+
+  void setClientInfo() {
+    String userId =
+        "${DateTime.now().millisecondsSinceEpoch}_${(widget.username).replaceAll(" ", "")}";
+    controller.appStates.receiverId.value = userId;
+    controller.appStates.receiverName.value = widget.username;
   }
 
   @override
@@ -48,51 +56,63 @@ class ChatScreenState extends State<ChatScreen> {
         title: const Text("groupchat"),
         actions: [
           ElevatedButton(
-            // onPressed: () {
-            //   //Do something here
-            // },
             onPressed: (() {
-              controller.webRtcLocal.createOfferAndConnect(
-                  controller.webSocket.socket, widget.roomId);
+              if (!controller.appStates.isServerConnected.value) {
+                //server will be connected when list is empty
+                controller.webRtcLocal.connectWebRtcServer(controller, 0);
+              }
             }),
-            child: const Text('Connect'),
+            child: ValueListenableBuilder<bool>(
+                valueListenable: controller.appStates.isServerConnected,
+                builder: (context, isServerConnected, child) {
+                  return isServerConnected
+                      ? const Text('Connected')
+                      : const Text('Connect');
+                }),
           ),
           const SizedBox(width: 20),
+          //
           ElevatedButton(
-            onPressed: () async {
-              if (isAudioEnabled) {
-                controller.audioVideo
-                    .disableAudio(controller.webRtcLocal.localStream!);
-              } else {
-                controller.audioVideo
-                    .enableAudio(controller.webRtcLocal.localStream!);
-              }
-              setState(() {
-                isAudioEnabled = !isAudioEnabled;
-              });
-            },
+            onPressed: () async {},
             child: Text('Mic is ${isAudioEnabled == true ? "on" : "off"}'),
           )
         ],
       ),
-      body: SizedBox(
+      body: Container(
+        padding: const EdgeInsets.all(5),
         width: double.infinity,
         height: double.infinity,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: LocalVideoDisplay(
-                  localRenderer: controller.webRtcLocal.localRenderer),
+              child: ValueListenableBuilder<int>(
+                  valueListenable: controller.appStates.index,
+                  builder: (context, index, child) {
+                    return Stack(
+                      children: [
+                        LocalVideoDisplay(controller: controller),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 50),
+                            child: ControlButtonBar(controller: controller),
+                          ),
+                        )
+                      ],
+                    );
+                  }),
             ),
             SizedBox(
               height: double.infinity,
               width: 300,
               child: ValueListenableBuilder<bool>(
-                  valueListenable: controller.appStates.refresshVideoList,
+                  valueListenable: controller.appStates.refresh,
                   builder: (context, value, child) {
                     return RemoteVideoGrid(
-                        connections: controller.webRtcLocal.connections);
+                      connections: controller.appStates.connections.value,
+                      controller: controller,
+                    );
                   }),
             ),
           ],

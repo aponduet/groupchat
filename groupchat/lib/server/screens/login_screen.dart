@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:groupchat/client/screens/chat_screen.dart';
+import 'package:groupchat/server/screens/server_home.dart';
 
-class JoinScreen extends StatefulWidget {
-  const JoinScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  JoinScreenState createState() => JoinScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class JoinScreenState extends State<JoinScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final TextEditingController _roomController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class JoinScreenState extends State<JoinScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           const Text(
-            "Join a room",
+            "Input Server Room Id",
             style: TextStyle(fontSize: 28.0),
           ),
           const SizedBox(
@@ -46,22 +45,6 @@ class JoinScreenState extends State<JoinScreen> {
             height: 20.0,
             width: double.infinity,
           ),
-          Container(
-            padding: const EdgeInsets.all(10.0),
-            width: 500,
-            child: TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Your Name",
-                hintText: "Enter your name",
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20.0,
-            width: double.infinity,
-          ),
           SizedBox(
             width: 300,
             height: 50,
@@ -72,9 +55,8 @@ class JoinScreenState extends State<JoinScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChatScreen(
-                          roomId: _roomController.text,
-                          username: _nameController.text),
+                      builder: (context) =>
+                          ServerHome(roomId: _roomController.text),
                     ),
                   );
                 } else {

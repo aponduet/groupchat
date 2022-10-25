@@ -1,5 +1,5 @@
 import 'package:groupchat/client/controller/audio_video.dart';
-import 'package:groupchat/client/controller/webrtc_local.dart';
+import 'package:groupchat/client/controller/webrtc.dart';
 import 'package:groupchat/client/controller/websocket.dart';
 import 'package:groupchat/client/data/app_states.dart';
 
